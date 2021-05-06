@@ -10,6 +10,7 @@
 #include "TrackingSD.h"
 
 #include "G4Box.hh"
+#include "G4Tubs.hh"
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
 #include "G4NistManager.hh"
@@ -29,7 +30,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 {
   // WORLD /////////////////////////////////////////////////
 
-  G4double world_size = 15.*m;
+  G4double world_size = 20.*cm;
   G4Material* world_mat = G4NistManager::Instance()->FindOrBuildMaterial("G4_AIR");
 
   G4Box* world_solid_vol =
@@ -44,24 +45,34 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
                       world_logic_vol, "world.physical", 0, false, 0, true);
 
   // DETECTOR //////////////////////////////////////////////
-  // resemble an APA size
+  // rough LAr volume in the UTAH 
+  // accounts for both light tubes and mesh rings...
   G4double detector_width   = 2.3*m;
   G4double detector_height  = 6.0*m;
   G4double detector_length  = 3.6*m;
+  G4double r_min    = 0.0*mm;
+  G4double r_max    = 46.0*mm;
+  G4double z_half   = 125.0*mm;
+  G4double phi_min  = 0.0;
+  G4double phi_max  = 2*M_PI;
+
   G4Material* detector_mat = G4NistManager::Instance()->FindOrBuildMaterial("G4_lAr");
 
-  G4Box* detector_solid_vol =
-    new G4Box("detector.solid", detector_width/2., detector_height/2., detector_length/2.);
+  G4Tubs* detector_solid_vol =
+    // new G4Box("detector.solid", detector_width/2., detector_height/2., detector_length/2.);
+    new G4Tubs("detector.solid", r_min, r_max, z_half, phi_min, phi_max);
 
   G4LogicalVolume* detector_logic_vol =
     new G4LogicalVolume(detector_solid_vol, detector_mat, "detector.logical");
 
-  G4ThreeVector offset(detector_width/2., detector_height/2., detector_length/2.);
+  // G4ThreeVector offset(detector_width/2., detector_height/2., detector_length/2.);
 
-  new G4PVPlacement(0, offset,
-                    detector_logic_vol, "detector.physical", world_logic_vol, false, 0, true);
+  // new G4PVPlacement(0, 0,
+  //                   detector_logic_vol, "detector.physical", world_logic_vol, false, 0, true);
 
   //////////////////////////////////////////////////////////
+
+
 
   return world_phys_vol;
 }
