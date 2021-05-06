@@ -77,18 +77,18 @@ void PrimaryGeneration::GeneratePrimaries(G4Event* event)
   MCTruthManager * mc_truth_manager = MCTruthManager::Instance();
 
   // get detector dimensions
-  if (!detector_solid_vol_)
-  {
-    G4LogicalVolume* detector_logic_vol
-      = G4LogicalVolumeStore::GetInstance()->GetVolume("detector.logical");
-    if (detector_logic_vol) detector_solid_vol_ = dynamic_cast<G4Box*>(detector_logic_vol->GetSolid());
-  }
-  if (detector_solid_vol_)
-  {
-    detector_length_x_ = detector_solid_vol_->GetXHalfLength() * 2.;
-    detector_length_y_ = detector_solid_vol_->GetYHalfLength() * 2.;
-    detector_length_z_ = detector_solid_vol_->GetZHalfLength() * 2.;
-  }
+  // if (!detector_solid_vol_)
+  // {
+  //   G4LogicalVolume* detector_logic_vol
+  //     = G4LogicalVolumeStore::GetInstance()->GetVolume("detector.logical");
+  //   if (detector_logic_vol) detector_solid_vol_ = dynamic_cast<G4Box*>(detector_logic_vol->GetSolid());
+  // }
+  // if (detector_solid_vol_)
+  // {
+  //   detector_length_x_ = detector_solid_vol_->GetXHalfLength() * 2.;
+  //   detector_length_y_ = detector_solid_vol_->GetYHalfLength() * 2.;
+  //   detector_length_z_ = detector_solid_vol_->GetZHalfLength() * 2.;
+  // }
 
   if (Particle_Type_ ==  "SUPERNOVA")
   {

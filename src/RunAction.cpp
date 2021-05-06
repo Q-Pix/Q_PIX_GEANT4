@@ -73,9 +73,9 @@ void RunAction::EndOfRunAction(const G4Run*)
       G4Box * detector_solid_vol
         = dynamic_cast<G4Box*>(detector_logic_vol->GetSolid());
 
-      double const detector_length_x = detector_solid_vol->GetXHalfLength() * 2. / CLHEP::cm;
-      double const detector_length_y = detector_solid_vol->GetYHalfLength() * 2. / CLHEP::cm;
-      double const detector_length_z = detector_solid_vol->GetZHalfLength() * 2. / CLHEP::cm;
+      // double const detector_length_x = detector_solid_vol->GetXHalfLength() * 2. / CLHEP::cm;
+      // double const detector_length_y = detector_solid_vol->GetYHalfLength() * 2. / CLHEP::cm;
+      // double const detector_length_z = detector_solid_vol->GetZHalfLength() * 2. / CLHEP::cm;
 
       // G4cout << "det. dim.: " << detector_length_x << " cm × "
       //                         << detector_length_y << " cm × "
@@ -83,9 +83,12 @@ void RunAction::EndOfRunAction(const G4Run*)
       //        << G4endl;
 
       // save detector dimensions as metadata
-      analysis_manager->FillMetadata(detector_length_x,
-                                     detector_length_y,
-                                     detector_length_z);
+      // analysis_manager->FillMetadata(detector_length_x,
+      //                                detector_length_y,
+      //                                detector_length_z);
+      analysis_manager->FillMetadata(777.,
+                                     777.,
+                                     777.);
     }
 
     // save run to ROOT file
