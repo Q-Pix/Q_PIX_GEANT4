@@ -31,7 +31,8 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // WORLD /////////////////////////////////////////////////
 
   G4double world_size = 20.*cm;
-  G4Material* world_mat = G4NistManager::Instance()->FindOrBuildMaterial("G4_AIR");
+  // G4Material* world_mat = G4NistManager::Instance()->FindOrBuildMaterial("G4_AIR");
+  G4Material* world_mat = G4NistManager::Instance()->FindOrBuildMaterial("G4_lAr");
 
   G4Box* world_solid_vol =
     new G4Box("world.solid", world_size/2., world_size/2., world_size/2.);
