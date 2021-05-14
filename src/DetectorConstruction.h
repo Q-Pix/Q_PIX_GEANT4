@@ -12,7 +12,7 @@
 #include "G4VUserDetectorConstruction.hh"
 
 class G4Material;
-
+class G4GenericMessenger;
 
 class DetectorConstruction: public G4VUserDetectorConstruction
 {
@@ -22,6 +22,10 @@ public:
 private:
   virtual G4VPhysicalVolume* Construct();
   virtual void ConstructSDandField();
+
+  G4GenericMessenger * messenger_;
+  G4String Detector_Geometry_;
+
 };
 
 #endif

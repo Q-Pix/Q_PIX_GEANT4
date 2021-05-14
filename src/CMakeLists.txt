@@ -20,7 +20,14 @@ SET(SRC   AnalysisManager.cpp
           TrackingSD.cpp
           TrackingHit.cpp
           Supernova.cpp
-          SupernovaTiming.cpp)
+          SupernovaTiming.cpp
+          OpticalMaterialProperties.cpp
+          LiquidArgonProperties.cpp
+          MaterialsList.cpp
+          PmtHit.cpp
+          PmtSD.cpp
+          GenericPhotosensor.cpp
+)
 
 add_library(${CMAKE_PROJECT_NAME} OBJECT ${SRC})
 
