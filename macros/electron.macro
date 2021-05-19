@@ -1,0 +1,32 @@
+# set verbosity
+/control/verbose 1
+/run/verbose 1
+/tracking/verbose 1
+
+# output path
+/Inputs/root_output /Users/austinmcdonald/projects/UTAH/Q_PIX_GEANT4/output/electron.root
+
+# initialize run
+/run/initialize
+/random/setSeeds 0 31
+
+# limit radioactive decay chains
+# use if needed
+#/grdm/nucleusLimits 1 35 1 17  # aMin aMax zMin zMax
+
+# particle type
+# e-, e+, mu-, mu+, neutron, proton, anti_proton, pi-, pi+, pi0, kaon-, kaon+,
+# gamma, opticalphoton, ...
+/gps/particle e-
+
+# spherical volume source
+/gps/pos/type Volume
+/gps/pos/shape Sphere
+/gps/pos/centre 0. 0. 5. cm
+/gps/pos/radius 0.01 cm
+
+# energy distribution
+/gps/ene/mono 2 MeV
+
+# run
+/run/beamOn 1

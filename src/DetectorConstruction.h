@@ -13,6 +13,7 @@
 
 class G4Material;
 class G4GenericMessenger;
+class G4MaterialPropertiesTable;
 
 class DetectorConstruction: public G4VUserDetectorConstruction
 {
@@ -23,8 +24,10 @@ private:
   virtual G4VPhysicalVolume* Construct();
   virtual void ConstructSDandField();
 
-  G4GenericMessenger * messenger_;
-  G4String Detector_Geometry_;
+  G4MaterialPropertiesTable* GetMyPhotOptSurf();
+
+  // G4GenericMessenger * messenger_;
+  // G4String Detector_Geometry_;
 
 };
 

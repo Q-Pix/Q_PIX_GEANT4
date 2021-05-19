@@ -15,7 +15,7 @@
 
 using namespace CLHEP;
 
-G4MaterialPropertiesTable* OpticalMaterialProperties::LAr()
+G4MaterialPropertiesTable* OpticalMaterialProperties::OpticalLAr()
 {
   LiquidArgonProperties LAr_prop;
   G4MaterialPropertiesTable* LAr_mpt = new G4MaterialPropertiesTable();
@@ -55,11 +55,17 @@ G4MaterialPropertiesTable* OpticalMaterialProperties::LAr()
   LAr_mpt->AddProperty("FASTCOMPONENT", sc_energy.data(), intensity.data(), sc_energy.size());
   LAr_mpt->AddProperty("SLOWCOMPONENT", sc_energy.data(), intensity.data(), sc_energy.size());
 
-  LAr_mpt->AddConstProperty("SCINTILLATIONYIELD", 51282.1/MeV);
+  // LAr_mpt->AddConstProperty("SCINTILLATIONYIELD", 51282.1/MeV);
+  LAr_mpt->AddConstProperty("SCINTILLATIONYIELD", 2./MeV);
   LAr_mpt->AddConstProperty("RESOLUTIONSCALE", 1);
   LAr_mpt->AddConstProperty("RAYLEIGH", 95.*cm);
   LAr_mpt->AddConstProperty("FASTTIMECONSTANT", 6.*ns);
   LAr_mpt->AddConstProperty("SLOWTIMECONSTANT", 1590.*ns);
+
+  // LAr_mpt->AddConstProperty("IONIZATIONENERGY", 42372.9/MeV);
+  // LAr_mpt->AddConstProperty("FANOFACTOR", 0.107);
+  // for (int i=0; i<100; ++i){G4cout << "MAT" <<"\t"<< LAr_mpt->GetConstProperty("IONIZATIONENERGY") <<  G4endl;} 
+
   // Yeild ratio from here
   // https://journals.aps.org/prd/pdf/10.1103/PhysRevD.103.043001
   LAr_mpt->AddConstProperty("YIELDRATIO", 0.84);
@@ -84,7 +90,7 @@ G4MaterialPropertiesTable* OpticalMaterialProperties::FakeGrid(G4double transpar
   G4MaterialPropertiesTable* mpt      = new G4MaterialPropertiesTable();
 
   // PROPERTIES FROM Liquid Argon
-  G4MaterialPropertiesTable* LAr_pt = LAr();
+  G4MaterialPropertiesTable* LAr_pt = OpticalLAr();
 
   mpt->AddProperty("RINDEX",        LAr_pt->GetProperty("RINDEX"));
   mpt->AddProperty("FASTCOMPONENT", LAr_pt->GetProperty("FASTCOMPONENT"));

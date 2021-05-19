@@ -109,6 +109,17 @@ void AnalysisManager::Book(std::string const file_path)
     event_tree_->Branch("hit_energy_deposit", &hit_energy_deposit_);
     event_tree_->Branch("hit_length",         &hit_length_);
     event_tree_->Branch("hit_process_key",    &hit_process_key_);
+
+
+    event_tree_->Branch("phit_start_x",        &phit_start_x_);
+    event_tree_->Branch("phit_start_y",        &phit_start_y_);
+    event_tree_->Branch("phit_start_z",        &phit_start_z_);
+    event_tree_->Branch("phit_start_t",        &phit_start_t_);
+    event_tree_->Branch("phit_end_x",          &phit_end_x_);
+    event_tree_->Branch("phit_end_y",          &phit_end_y_);
+    event_tree_->Branch("phit_end_z",          &phit_end_z_);
+    event_tree_->Branch("phit_end_t",          &phit_end_t_);
+
 }
 
 //-----------------------------------------------------------------------------
@@ -187,12 +198,26 @@ void AnalysisManager::EventReset()
     hit_energy_deposit_.clear();
     hit_length_.clear();
     hit_process_key_.clear();
+
+
+    phit_start_x_.clear();
+    phit_start_y_.clear();
+    phit_start_z_.clear();
+    phit_start_t_.clear();
+    phit_end_x_.clear();
+    phit_end_y_.clear();
+    phit_end_z_.clear();
+    phit_end_t_.clear();
 }
 
 //-----------------------------------------------------------------------------
 void AnalysisManager::EventFill()
 {
     // fill TTree objects per event
+    G4cout << "event HITS size" <<"\t"<< hit_start_x_.size() <<  G4endl;
+    G4cout << "event pmtHITS size" <<"\t"<< phit_start_x_.size() <<  G4endl;
+    // for (int i=0; i<10; ++i){G4cout << "HITS size" <<"\t"<< hit_start_x_.size() <<  G4endl;} 
+    // for (int i=0; i<10; ++i){G4cout << "pmtHITS size" <<"\t"<< phit_start_x_.size() <<  G4endl;} 
     event_tree_->Fill();
 }
 
@@ -277,10 +302,13 @@ void AnalysisManager::AddMCParticle(MCParticle const * particle)
     number_particles_ += 1;
 
     std::vector< TrajectoryHit > const hits = particle->Hits();
+    // G4cout << "HITS size" <<"\t"<< hits.size() <<"\t"<< "PDG "<< particle->PDGCode() << G4endl;
+    // for (int i=0; i<10; ++i){G4cout << "HITS size" <<"\t"<< hits.size() <<  G4endl;} 
 
     for (auto const & hit : hits)
     {
         energy_deposit_ += hit.Energy();
+        // G4cout << "\t"<< hit.Energy() << G4endl;
 
         hit_track_id_.push_back(hit.TrackID());
 
@@ -299,6 +327,35 @@ void AnalysisManager::AddMCParticle(MCParticle const * particle)
 
         hit_process_key_.push_back(this->ProcessToKey(hit.Process()));
         number_hits_ += 1;
+    }
+
+
+
+    std::vector< TrajectoryHit > const pmt_hits = particle->PmtHits();
+    // for (int i=0; i<10; ++i){G4cout << "PMT HITS size" <<"\t"<< pmt_hits.size() <<  G4endl;} 
+    // G4cout << "PMT HITS size" <<"\t"<< pmt_hits.size() <<  G4endl;
+
+    for (auto const & hit : pmt_hits)
+    {
+        // energy_deposit_ += hit.Energy();
+
+        // hit_track_id_.push_back(hit.TrackID());
+
+        phit_start_x_.push_back(hit.StartPoint().X());
+        phit_start_y_.push_back(hit.StartPoint().Y());
+        phit_start_z_.push_back(hit.StartPoint().Z());
+        phit_start_t_.push_back(hit.StartTime());
+
+        phit_end_x_.push_back(hit.EndPoint().X());
+        phit_end_y_.push_back(hit.EndPoint().Y());
+        phit_end_z_.push_back(hit.EndPoint().Z());
+        phit_end_t_.push_back(hit.EndTime());
+
+        // hit_length_.push_back(hit.Length());
+        // hit_energy_deposit_.push_back(hit.Energy());
+
+        // hit_process_key_.push_back(this->ProcessToKey(hit.Process()));
+        // number_hits_ += 1;
     }
 }
 

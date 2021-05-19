@@ -58,7 +58,17 @@ void EventAction::EndOfEventAction(const G4Event* event)
     for (auto const& p : MCParticleMap)
     {
         auto const& particle = p.second;
+        // if (particle->PDGCode() != 0)
+        // {
+        //     analysis_manager->AddMCParticle(particle);
+        //     G4cout << "particle" <<"\t"<< particle->PDGCode() <<  G4endl;
+        // }
         analysis_manager->AddMCParticle(particle);
+        // G4cout << "particle" <<"\t"<< particle->PDGCode() <<  G4endl;
+        // G4cout << "particle" <<"\t"<< particle->Hits().size() <<  G4endl;
+        
+        // auto const& hmmm = p.first;
+        // G4cout << "hmmm" <<"\t"<< hmmm <<  G4endl;
     }
 
     // write event to ROOT file and reset event variables

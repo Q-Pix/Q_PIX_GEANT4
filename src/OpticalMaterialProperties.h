@@ -23,7 +23,7 @@ class OpticalMaterialProperties
 {
 public:
 
-static G4MaterialPropertiesTable* LAr();
+static G4MaterialPropertiesTable* OpticalLAr();
 
 
 static G4MaterialPropertiesTable* FakeGrid(G4double transparency=.9,

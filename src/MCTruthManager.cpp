@@ -103,6 +103,7 @@ MCParticle * MCTruthManager::GetMCParticle(int const trackID)
         G4Exception("MCTruthManager::MCTruthManager", "Error",
                     FatalException, message.data());
     }
+    
     return mc_particle_map_.at(trackID);
 }
 

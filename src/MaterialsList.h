@@ -23,6 +23,8 @@ using namespace CLHEP;
 class MaterialsList
 {
 public:
+// optical liquid argon
+static G4Material* OLAr();
 
 // Stainless Steel (grade 304L)
 static G4Material* Steel();

@@ -12,6 +12,7 @@
 // Q-Pix includes
 #include "GeneratorParticle.h"
 #include "MCParticle.h"
+// #include "MCPhoton.h"
 
 // GEANT4 includes
 #include "globals.hh"
@@ -60,6 +61,10 @@ class MCTruthManager {
 
         inline std::map< int, MCParticle * > GetMCParticleMap() const { return mc_particle_map_; }
 
+
+
+        // void AddMCPhoton(MCPhoton *);
+        // inline std::vector< MCPhoton * > GetMCPhotons() const { return mc_photons_; }
     private:
 
         static MCTruthManager * instance_;
@@ -78,6 +83,8 @@ class MCTruthManager {
         // MC particle map
         // std::map< int, MCParticle > mc_particle_map_;
         std::map< int, MCParticle * > mc_particle_map_;
+
+        // std::vector< PhotonHit * > mc_photons_;
 
 };
 

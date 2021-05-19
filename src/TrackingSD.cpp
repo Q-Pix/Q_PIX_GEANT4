@@ -16,6 +16,8 @@
 // GEANT4 includes
 #include "G4SDManager.hh"
 #include "G4SystemOfUnits.hh"
+#include <G4OpticalPhoton.hh>
+#include "G4VProcess.hh"
 
 // C++ includes
 #include <vector>
@@ -52,10 +54,15 @@ TrackingSD::~TrackingSD()
 
 G4bool TrackingSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
 {
+  G4Track* track = aStep->GetTrack();
+  if (track->GetParticleDefinition() == G4OpticalPhoton::Definition())
+    return false;
+
+
   G4double edep = aStep->GetTotalEnergyDeposit();
 
-  // if (edep==0.) return false;
-  if (edep < 1. *keV ) return false;
+  if (edep==0.) return false;
+  // if (edep < 1. *keV ) return false;
 
   if (Event_Cutoff_ != 0.0)
   {
@@ -65,13 +72,6 @@ G4bool TrackingSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
     // if (hitTime<0. || hitTime>Event_Cutoff_) return false;
     if (hitTime>Event_Cutoff_) return false;
   }
-
-  // TrackingHit* newHit = new TrackingHit();
-
-  // newHit->SetEdep(edep);
-  // newHit->SetPosition(aStep->GetPostStepPoint()->GetPosition());
-
-  // hc_->insert(newHit);
 
   //---------------------------------------------------------------------------
   // begin add hit to MCParticle
@@ -85,6 +85,15 @@ G4bool TrackingSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
 
   // add hit to MC particle
   particle->AddTrajectoryHit(aStep);
+
+  // G4double time = aStep->GetPostStepPoint()->GetGlobalTime()/CLHEP::ns;
+  // G4double MyX  = aStep->GetPostStepPoint()->GetPosition().x()/CLHEP::cm;
+  // G4double MyY  = aStep->GetPostStepPoint()->GetPosition().y()/CLHEP::cm;
+  // G4double MyZ  = aStep->GetPostStepPoint()->GetPosition().z()/CLHEP::cm;
+  // G4double MyE  = aStep->GetTotalEnergyDeposit() / CLHEP::MeV;
+  // G4String pro  = aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName();
+
+  // G4cout << "HIT TIME, " << time <<"\t"<< MyX <<"\t"<< MyY <<"\t"<< MyZ <<"\t"<< MyE <<"\t"<< pro << G4endl;
 
   //---------------------------------------------------------------------------
   // end add hit to MCParticle

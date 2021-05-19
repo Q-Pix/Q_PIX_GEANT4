@@ -111,6 +111,16 @@ class AnalysisManager {
         std::vector< double > hit_energy_deposit_;
         std::vector< int >    hit_process_key_;
 
+
+        std::vector< double > phit_start_x_;
+        std::vector< double > phit_start_y_;
+        std::vector< double > phit_start_z_;
+        std::vector< double > phit_start_t_;
+        std::vector< double > phit_end_x_;
+        std::vector< double > phit_end_y_;
+        std::vector< double > phit_end_z_;
+        std::vector< double > phit_end_t_;
+
         // number of generator particles
         int generator_initial_number_particles_;
         int generator_final_number_particles_;

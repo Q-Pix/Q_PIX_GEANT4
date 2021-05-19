@@ -12,9 +12,29 @@
 #include <G4Element.hh>
 #include <G4NistManager.hh>
 
+#include <CLHEP/Units/SystemOfUnits.h>
 
 
 
+G4Material* MaterialsList::OLAr()
+{
+  G4String name = "OLAr";
+
+  G4Material* mat = G4Material::GetMaterial(name, false);
+
+  if (mat == 0) {
+    G4NistManager* nist = G4NistManager::Instance();
+
+    mat = new G4Material(name, 1.3973*CLHEP::g/CLHEP::cm3, 1,
+			 kStateLiquid, 87*CLHEP::kelvin, 1*CLHEP::bar);
+
+    G4Element* Ar = nist->FindOrBuildElement("Ar");
+
+    mat->AddElement(Ar,1);
+  }
+
+  return mat;
+}
 
 G4Material* MaterialsList::Steel()
 {

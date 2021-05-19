@@ -19,14 +19,14 @@
 #include "G4Run.hh"
 
 
-RunAction::RunAction(): G4UserRunAction(), Detector_Geometry_("APA")
+RunAction::RunAction(): G4UserRunAction()//, Detector_Geometry_("APA")
 {
     messenger_ = new G4GenericMessenger(this, "/Inputs/");
     messenger_->DeclareProperty("root_output", root_output_path_,
                                 "path to output ROOT file");
     messenger_->DeclareProperty("MARLEY_json", marley_json_,
                                 "MARLEY configuration file");
-    messenger_->DeclareProperty("Geometry", Detector_Geometry_,  "which geometry?");
+    //messenger_->DeclareProperty("Geometry", Detector_Geometry_,  "which geometry?");
 }
 
 
@@ -72,25 +72,28 @@ void RunAction::EndOfRunAction(const G4Run*)
 
     if (detector_logic_vol)
     {
-      if (Detector_Geometry_ == "APA")
-      {G4Box * detector_solid_vol
-        = dynamic_cast<G4Box*>(detector_logic_vol->GetSolid());
-
-        double const detector_length_x = detector_solid_vol->GetXHalfLength() * 2. / CLHEP::cm;
-        double const detector_length_y = detector_solid_vol->GetYHalfLength() * 2. / CLHEP::cm;
-        double const detector_length_z = detector_solid_vol->GetZHalfLength() * 2. / CLHEP::cm;
-
-        // save detector dimensions as metadata
-        analysis_manager->FillMetadata(detector_length_x,
-                                      detector_length_y,
-                                      detector_length_z);
-      }
-      else
-      {
-        analysis_manager->FillMetadata(777.,
+      analysis_manager->FillMetadata(777.,
                                        777.,
                                        777.);
-      }
+      // if (Detector_Geometry_ == "APA")
+      // {G4Box * detector_solid_vol
+      //   = dynamic_cast<G4Box*>(detector_logic_vol->GetSolid());
+
+      //   double const detector_length_x = detector_solid_vol->GetXHalfLength() * 2. / CLHEP::cm;
+      //   double const detector_length_y = detector_solid_vol->GetYHalfLength() * 2. / CLHEP::cm;
+      //   double const detector_length_z = detector_solid_vol->GetZHalfLength() * 2. / CLHEP::cm;
+
+      //   // save detector dimensions as metadata
+      //   analysis_manager->FillMetadata(detector_length_x,
+      //                                 detector_length_y,
+      //                                 detector_length_z);
+      // }
+      // else
+      // {
+      //   analysis_manager->FillMetadata(777.,
+      //                                  777.,
+      //                                  777.);
+      // }
     }
 
     // save run to ROOT file

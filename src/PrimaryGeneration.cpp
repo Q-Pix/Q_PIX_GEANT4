@@ -43,14 +43,14 @@
 PrimaryGeneration::PrimaryGeneration()
   : G4VUserPrimaryGeneratorAction(),
     decay_at_time_zero_(false),
-    particle_gun_(0),
-    Detector_Geometry_("APA")
+    particle_gun_(0)//,
+    // Detector_Geometry_("NAPA")
 {
   msg_ = new G4GenericMessenger(this, "/Inputs/", "Control commands of the ion primary generator.");
   msg_->DeclareProperty("Particle_Type", Particle_Type_,  "which particle?");
   msg_->DeclareProperty("decay_at_time_zero", decay_at_time_zero_,
                         "Set to true to make unstable isotopes decay at t=0.");
-  msg_->DeclareProperty("Geometry", Detector_Geometry_,  "which geometry?");
+  // msg_->DeclareProperty("Geometry", Detector_Geometry_,  "which geometry?");
 
   particle_gun_ = new G4GeneralParticleSource();
 
@@ -79,21 +79,21 @@ void PrimaryGeneration::GeneratePrimaries(G4Event* event)
   MCTruthManager * mc_truth_manager = MCTruthManager::Instance();
 
   // get detector dimensions
-  if (Detector_Geometry_ == "APA")
-  {
-    if (!detector_solid_vol_)
-    {
-      G4LogicalVolume* detector_logic_vol
-        = G4LogicalVolumeStore::GetInstance()->GetVolume("detector.logical");
-      if (detector_logic_vol) detector_solid_vol_ = dynamic_cast<G4Box*>(detector_logic_vol->GetSolid());
-    }
-    if (detector_solid_vol_)
-    {
-      detector_length_x_ = detector_solid_vol_->GetXHalfLength() * 2.;
-      detector_length_y_ = detector_solid_vol_->GetYHalfLength() * 2.;
-      detector_length_z_ = detector_solid_vol_->GetZHalfLength() * 2.;
-    }
-  }
+  // if (Detector_Geometry_ == "APA")
+  // {
+  //   if (!detector_solid_vol_)
+  //   {
+  //     G4LogicalVolume* detector_logic_vol
+  //       = G4LogicalVolumeStore::GetInstance()->GetVolume("detector.logical");
+  //     if (detector_logic_vol) detector_solid_vol_ = dynamic_cast<G4Box*>(detector_logic_vol->GetSolid());
+  //   }
+  //   if (detector_solid_vol_)
+  //   {
+  //     detector_length_x_ = detector_solid_vol_->GetXHalfLength() * 2.;
+  //     detector_length_y_ = detector_solid_vol_->GetYHalfLength() * 2.;
+  //     detector_length_z_ = detector_solid_vol_->GetZHalfLength() * 2.;
+  //   }
+  // }
   
 
   if (Particle_Type_ ==  "SUPERNOVA")

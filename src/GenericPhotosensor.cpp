@@ -230,7 +230,7 @@ void GenericPhotosensor::Construct()
   G4SDManager* sdmgr = G4SDManager::GetSDMpointer();
 
   if (!sdmgr->FindSensitiveDetector(sdname, false)) {
-    PmtSD* sensdet = new PmtSD(sdname);
+    PmtSD* sensdet = new PmtSD(sdname, "PmtHitsCollection");
     if (sensor_depth_ == -1)
       G4Exception("[GenericPhotosensor]", "Construct()", FatalException,
                   "Sensor Depth must be set before constructing");

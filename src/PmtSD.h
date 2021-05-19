@@ -26,14 +26,15 @@ class PmtSD: public G4VSensitiveDetector
 public:
 /// Constructor providing names for the sensitive detector
 /// and the collection of hits
-PmtSD(G4String sdname);
+PmtSD(G4String sdname, const G4String&);
 /// The destructor
 ~PmtSD();
 
 /// Initialization of the sensitive detector. Invoked at the beginning
 /// of every event. The collection of hits is created here and registered
 /// in the event (so that it can be retrieved thru the G4HCofThisEvent object).
-void Initialize(G4HCofThisEvent*);
+
+// void Initialize(G4HCofThisEvent*);
 
 /// Method invoked at the end of every event
 void EndOfEvent(G4HCofThisEvent*);

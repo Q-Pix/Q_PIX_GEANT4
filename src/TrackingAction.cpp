@@ -59,6 +59,11 @@ void TrackingAction::PreUserTrackingAction(const G4Track* track)
     );
 
     mc_truth_manager->AddMCParticle(particle);
+    // if (track->GetDefinition()->GetPDGEncoding() == 11)
+    // {
+    //     G4cout << "\t"<< "Fuck me  " << track->GetTotalEnergy()  / CLHEP::MeV << G4endl;
+    // }
+    
 }
 
 void TrackingAction::PostUserTrackingAction(const G4Track* track)

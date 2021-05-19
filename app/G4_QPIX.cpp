@@ -19,7 +19,7 @@
 #include <G4UIExecutive.hh>
 #include <FTFP_BERT_HP.hh>
 #include <G4EmStandardPhysics_option4.hh>
-
+#include <G4OpticalPhysics.hh>
 
 #include "Randomize.hh"
 #include "time.h"
@@ -48,6 +48,9 @@ int main(int argc, char** argv)
 
   G4VModularPhysicsList* physics_list = new FTFP_BERT_HP();
   physics_list->ReplacePhysics(new G4EmStandardPhysics_option4());
+  physics_list->RegisterPhysics(new G4OpticalPhysics());;
+
+
   run_manager->SetUserInitialization(physics_list);
 
   run_manager->SetUserInitialization(new DetectorConstruction());

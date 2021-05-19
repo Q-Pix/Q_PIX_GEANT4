@@ -1,13 +1,13 @@
 // -----------------------------------------------------------------------------
-//  MCParticle.h
+//  MCPhoton.h
 //
-//  Class definition of MCParticle
+//  Class definition of MCPhoton
 //   * Author: Everybody is an author!
 //   * Creation date: 7 August 2020
 // -----------------------------------------------------------------------------
 
-#ifndef MCParticle_h
-#define MCParticle_h 1
+#ifndef MCPhoton_h
+#define MCPhoton_h 1
 
 // Q-Pix includes
 #include "geo_types.h"
@@ -25,32 +25,8 @@
 #include <utility>
 #include <vector>
 
-// struct TrajectoryPoint
-// {
-//     TLorentzVector position_;
-//     TLorentzVector momentum_;
-//     std::string    process_ = "unknown";
-//     double         energy_deposit_ = 0;
-//     double         length_ = 0;
-// 
-//     TLorentzVector Position()      const { return position_;       }
-//     TLorentzVector Momentum()      const { return momentum_;       }
-//     std::string    Process()       const { return process_;        }
-//     double         EnergyDeposit() const { return energy_deposit_; }
-//     double         Length()        const { return length_;         }
-// 
-//     double X()  const { return position_.X();  }
-//     double Y()  const { return position_.Y();  }
-//     double Z()  const { return position_.Z();  }
-//     double T()  const { return position_.T();  }
-// 
-//     double Px() const { return momentum_.Px(); }
-//     double Py() const { return momentum_.Py(); }
-//     double Pz() const { return momentum_.Pz(); }
-//     double E()  const { return momentum_.E();  }
-// };
 
-struct TrajectoryHit
+struct PhotonHit
 {
     Point_t     start_ = {0., 0., 0.};
     Point_t     end_ = {0., 0., 0.};
@@ -64,12 +40,8 @@ struct TrajectoryHit
 
     Point_t StartPoint() const { return start_; }
     Point_t EndPoint()   const { return end_;   }
-    Point_t MidPoint()   const { return { (start_.X() + end_.X())/2.0,
-                                          (start_.Y() + end_.Y())/2.0,
-                                          (start_.Z() + end_.Z())/2.0 }; }
     double  StartTime()  const { return start_time_;     }
     double  EndTime()    const { return end_time_;       }
-    double  Time()       const { return (start_time_ + end_time_)/2.0; }
     double  Energy()     const { return energy_deposit_; }
     double  TrackID()    const { return track_id_;       }
     double  PDGCode()    const { return pdg_code_;       }
@@ -77,23 +49,20 @@ struct TrajectoryHit
     std::string Process() const { return process_; }
 };
 
-class MCParticle
+class MCPhoton
 {
 
     public:
 
-        MCParticle();
-        ~MCParticle();
+        MCPhoton();
+        ~MCPhoton();
 
-        // void AddTrajectoryPoint(const TrajectoryPoint &);
-        void AddTrajectoryHit(TrajectoryHit const &);
-        void AddTrajectoryHit(G4Step const *);
+        // void AddPhotonPoint(const PhotonPoint &);
+        void AddPhotonHit(PhotonHit const &);
+        void AddPhotonHit(G4Step const *);
 
-        void AddPmtHit(TrajectoryHit const &);
-        void AddPmtHit(G4Step const *);
-
-        inline std::vector< TrajectoryHit > Hits() const { return hits_; }
-        inline std::vector< TrajectoryHit > PmtHits() const { return pmt_hits_; }
+        inline std::vector< PhotonHit > Hits() const { return hits_; }
+        inline std::vector< PhotonHit > PmtHits() const { return pmt_hits_; }
 
         inline int         TrackID()        const { return track_id_;        }
         inline int         ParentTrackID()  const { return parent_track_id_; }
@@ -133,9 +102,8 @@ class MCParticle
         TLorentzVector initial_position_;
         TLorentzVector initial_momentum_;
 
-        // std::vector< TrajectoryPoint > trajectory_;
-        std::vector< TrajectoryHit > hits_;
-        std::vector< TrajectoryHit > pmt_hits_;
+        // std::vector< PhotonPoint > Photon_;
+        std::vector< PhotonHit > photon_hits_;
 
 };
 
